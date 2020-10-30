@@ -1,0 +1,21 @@
+
+### 请求接口
+GET http://localhost:8080/message/hello
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJtYWNybyIsInNjb3BlIjpbImFsbCJdLCJpZCI6MSwiZXhwIjoxNjA0MDQ5NjUwLCJhdXRob3JpdGllcyI6WyJBRE1JTiJdLCJqdGkiOiI0MmNkZDZlOS00NTE5LTQ2ODctYjBhNi1kYzc1N2I1YzQ2OWEiLCJjbGllbnRfaWQiOiJjbGllbnQtYXBwIn0.PhxGSua_xqRVXSIDDb59j7v-GWBcaSFTvnlI6wqgqOL8NpWNVlRm7tCjz5Jgqn5GB9ensO57vKaCzP8FrWCCouvps1-Xuo6RK_irddhfjVVqBhDbxEcsLO1VR8AfFQvo4H6zIzZHjfkEuDERmsQlcsPiEP3uRcAMRtoNwXyh4d8
+
+### 授权
+GET http://localhost:8080/auth/rsa/publicKey
+
+###
+
+POST http://localhost:8080/auth/oauth/token
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=password&client_id=client-app&client_secret=123456&username=macro&password=123456
+###
+
+POST http://localhost:8024/oauth/token
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=password&client_id=client-app&client_secret=123456&username=macro&password=123456

@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: user-srv
+  cloud:
+    nacos:
+      discovery:
+        username: nacos
+        password: nacos
+        server-addr: 127.0.0.1:8848
+        namespace: public
+  zipkin:
+    base-url: http://localhost:9411
+    discovery-client-enabled: false
+  sleuth:
+    sampler:
+      probability: 1.0
+    redis:
+      enabled: false
+  data:
+    mongodb:
+      database: aegis
+server:
+  port: 0
+
+dubbo:
+  protocol:
+    port: -1
+    name: dubbo
+    id: dubbo

@@ -1,0 +1,5 @@
+### 授权
+POST http://localhost:8024/oauth/token
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=password&client_id=client-app&client_secret=123456&username=youngxhui@gmail.com&password=123456
