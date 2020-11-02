@@ -22,11 +22,11 @@ extra["springCloudAlibabaVersion"] = "2.2.2.RELEASE"
 
 dependencies {
     implementation("org.springframework.cloud:spring-cloud-starter-zipkin:2.2.5.RELEASE")
-    implementation("io.zipkin.brave:brave-instrumentation-dubbo-rpc:2.2.5.RELEASE:5.12.3")
     implementation("com.alibaba.cloud:spring-cloud-starter-dubbo")
     implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
     implementation("com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
+    implementation("io.zipkin.brave:brave-instrumentation-dubbo-rpc:5.12.7")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation(project(":common"))
     testImplementation("org.springframework.boot:spring-boot-starter-test") {

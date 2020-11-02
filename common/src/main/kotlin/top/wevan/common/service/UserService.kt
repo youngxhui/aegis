@@ -1,6 +1,6 @@
 package top.wevan.common.service
 
-import top.wevan.common.dto.UserDTO
+import top.wevan.common.dto.UserDto
 
 
 /**
@@ -9,5 +9,5 @@ import top.wevan.common.dto.UserDTO
  */
 
 interface UserService {
-    fun findUserById(id:String): UserDTO
+    fun findUserById(id:String): UserDto
 }

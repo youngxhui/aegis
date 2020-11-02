@@ -1,6 +1,19 @@
 spring:
   application:
     name: course-srv
+  zipkin:
+    base-url: http://localhost:9411
+    discovery-client-enabled: false
+  sleuth:
+    sampler:
+      probability: 1.0
+    redis:
+      enabled: false
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    password: 1234
+    username: postgres
+    url: jdbc:postgresql://localhost:5432/aegis
   cloud:
     nacos:
       discovery:

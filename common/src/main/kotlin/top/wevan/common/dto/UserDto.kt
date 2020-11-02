@@ -7,7 +7,7 @@ import java.io.Serializable
  * Copyright © 2020 young. All rights reserved.
  */
 
-class UserDTO : Serializable {
+class UserDto : Serializable {
     lateinit var id: String
     lateinit var password: String
     lateinit var username: String
