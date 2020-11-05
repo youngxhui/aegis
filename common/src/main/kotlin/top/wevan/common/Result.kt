@@ -8,4 +8,4 @@ import java.io.Serializable
  * Copyright © 2020 young. All rights reserved.
  */
 
-data class CommonResult(var code: Long = 200, var message: String = "成功", var data: Any? = null) : Serializable
+data class Result(var code: Long = 200, var message: String = "成功", var data: Any? = null) : Serializable

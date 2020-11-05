@@ -2,6 +2,7 @@ package top.wevan.coursesrv.po
 
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedDate
+import org.springframework.data.jpa.domain.support.AuditingEntityListener
 import java.sql.Timestamp
 import javax.persistence.*
 
@@ -10,11 +11,19 @@ import javax.persistence.*
  * Create by young on 2020/11/2
  * Copyright © 2020 young. All rights reserved.
  */
+
+@Table(
+    name = "course", indexes = [
+        Index(name = "id", columnList = "id"),
+        Index(name = "tip_id", columnList = "tipId"),
+        Index(name = "sub_tip_id", columnList = "subTipId"),
+        Index(name = "level_id", columnList = "levelId")]
+)
 @Entity
-@Table(name = "courses")
+@EntityListeners(AuditingEntityListener::class)
 class CoursePo {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long = 0
 
     /**
@@ -72,6 +81,7 @@ class CoursePo {
      */
     lateinit var teacher: String
 
+    @Column(name = "is_online", columnDefinition = "boolean default true")
     var online: Boolean = true
 
     @CreatedDate
@@ -89,4 +99,6 @@ class CoursePo {
     override fun toString(): String {
         return "Course(id=$id, name='$name', cover=$cover, tipId=$tipId, subTipId=$subTipId, description=$description, institution=$institution, levelId=$levelId, catalog=$catalog, url=$url, period=$period, online=$online,check=$check, enable=$enable)"
     }
+
+
 }

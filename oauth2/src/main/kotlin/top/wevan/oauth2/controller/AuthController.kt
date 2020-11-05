@@ -1,6 +1,6 @@
 package top.wevan.oauth2.controller
 
-import top.wevan.common.CommonResult
+import top.wevan.common.Result
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.oauth2.provider.endpoint.TokenEndpoint
 import org.springframework.web.HttpRequestMethodNotSupportedException
@@ -31,13 +31,13 @@ class AuthController {
     fun postAccessToken(
         principal: Principal,
         @RequestParam parameters: Map<String, String>
-    ): CommonResult {
+    ): Result {
         val oAuth2AccessToken = tokenEndpoint.postAccessToken(principal, parameters).body!!
         val oauth2TokenDto = Oauth2TokenDTO()
         oauth2TokenDto.token = oAuth2AccessToken.value
         oauth2TokenDto.refreshToken = oAuth2AccessToken.refreshToken.value
         oauth2TokenDto.expiresIn = oAuth2AccessToken.expiresIn
         oauth2TokenDto.tokenHead = "Bearer "
-        return CommonResult.success(oauth2TokenDto)
+        return Result.success(oauth2TokenDto)
     }
 }

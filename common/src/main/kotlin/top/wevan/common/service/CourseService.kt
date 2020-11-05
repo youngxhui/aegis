@@ -1,6 +1,7 @@
 package top.wevan.common.service
 
 import top.wevan.common.dto.CourseDto
+import top.wevan.common.dto.PageDto
 
 
 /**
@@ -12,11 +13,49 @@ interface CourseService {
     /**
      * 获取所有的课程
      */
-    fun allCourses(page: Int, size: Int): List<CourseDto>
+    fun allCourses(page: Int, size: Int): PageDto<CourseDto>
 
     /**
      * 获取目前可用的课程
      */
-    fun allEnableCourses(page: Int,size: Int,enable:Boolean): List<CourseDto>
+    fun allEnableCourses(page: Int, size: Int, enable: Boolean): PageDto<CourseDto>
 
+    /**
+     * 通过id获取课程
+     * @param courseId 课程id
+     */
+    fun findCourseById(courseId: Long): CourseDto
+
+    /**
+     * 保存课程
+     * @param courseParam 课程
+     */
+//    fun saveCourse(courseParam: CourseParam)
+
+    /**
+     * 根据tipId获取课程列表
+     */
+    fun findAllByTipId(tipId: Long, page: Int, size: Int): List<CourseDto>
+
+    /**
+     * 根据subTipId和tipId获取课程列表
+     */
+    fun findAllBySubTip(subTipId: Long, page: Int, size: Int): List<CourseDto>
+
+
+    /**
+     * 更新是否可用的状态
+     */
+    fun updateEnableState(courseId: Long): Boolean
+
+
+    /**
+     * 统计所有的课程数量
+     */
+    fun countCourse(): Long
+
+    /**
+     * 从`url`获取课程信息
+     */
+//    fun getCourseInfoFromUrl(url: String): CourseInfoResponse
 }

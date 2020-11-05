@@ -6,7 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Service
+import top.wevan.common.exception.ResultCode
 import top.wevan.common.dto.CourseDto
+import top.wevan.common.dto.PageDto
+import top.wevan.common.exception.ResultException
 import top.wevan.common.service.CourseService
 import top.wevan.coursesrv.po.CoursePo
 import top.wevan.coursesrv.repository.CourseRepository
@@ -26,28 +29,69 @@ class CourseServiceImpl : CourseService {
     /**
      * 获取所有的课程
      */
-    override fun allCourses(page: Int, size: Int): List<CourseDto> {
-        val page = PageRequest.of(page, size)
-        val all: Page<CoursePo> = courseRepository.findAll(page)
-        return pageable2list(all)
+    override fun allCourses(page: Int, size: Int): PageDto<CourseDto> {
+        val pageable = PageRequest.of(page, size)
+
+        val all: Page<CoursePo> = courseRepository.findAll(pageable)
+
+        return page2PageDto(all)
     }
 
     /**
      * 获取所有可使用的课程
      */
-    override fun allEnableCourses(page: Int, size: Int, enable: Boolean): List<CourseDto> {
-        val page = PageRequest.of(page, size)
-        val all = courseRepository.findAllByEnable(enable, page)
-        return pageable2list(all)
+    override fun allEnableCourses(page: Int, size: Int, enable: Boolean): PageDto<CourseDto> {
+        val pageable = PageRequest.of(page, size)
+        val all = courseRepository.findAllByEnable(enable, pageable)
+
+        return page2PageDto(all)
     }
 
 
-    private fun pageable2list(coursePos: Page<CoursePo>): List<CourseDto> {
-        return coursePos.map {
-            val courseDto = CourseDto()
-            BeanUtils.copyProperties(it, courseDto)
-            return@map courseDto
-        }.toList()
+    /**
+     * 通过课程id找到对应的课程
+     */
+    override fun findCourseById(courseId: Long): CourseDto {
+        val coursePo = courseRepository.findById(courseId).orElseThrow {
+            throw ResultException("没有该课程", ResultCode.NotResource.code)
+        }
+        val courseDto = CourseDto()
+        BeanUtils.copyProperties(coursePo, courseDto)
+        return courseDto
     }
 
+    /**
+     * 根据tipId获取课程列表
+     */
+    override fun findAllByTipId(tipId: Long, page: Int, size: Int): List<CourseDto> {
+        TODO("Not yet implemented")
+    }
+
+    /**
+     * 根据subTipId和tipId获取课程列表
+     */
+    override fun findAllBySubTip(subTipId: Long, page: Int, size: Int): List<CourseDto> {
+        TODO("Not yet implemented")
+    }
+
+    /**
+     * 更新是否可用的状态
+     */
+    override fun updateEnableState(courseId: Long): Boolean {
+        TODO("Not yet implemented")
+    }
+
+    /**
+     * 统计所有的课程数量
+     */
+    override fun countCourse(): Long {
+        TODO("Not yet implemented")
+    }
+
+
+    private fun page2PageDto(coursePos: Page<CoursePo>): PageDto<CourseDto> {
+        val pageDto = PageDto<CourseDto>()
+        BeanUtils.copyProperties(coursePos, pageDto)
+        return pageDto
+    }
 }

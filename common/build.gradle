@@ -1,0 +1,21 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
+plugins {
+    id("org.jetbrains.kotlin.jvm")
+}
+
+
+repositories {
+    maven { url("http://maven.aliyun.com/nexus/content/groups/public/") }
+    mavenCentral()
+}
+
+dependencies {
+    implementation("org.jetbrains.kotlin:kotlin-stdlib")
+}
+
+tasks.withType(KotlinCompile).all {
+    kotlinOptions {
+        jvmTarget = "11"
+    }
+}

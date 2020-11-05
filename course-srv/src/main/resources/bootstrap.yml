@@ -21,7 +21,11 @@ spring:
         password: nacos
         server-addr: 127.0.0.1:8848
         namespace: public
-
+  jpa:
+    hibernate:
+      ddl-auto: update
+  jackson:
+    date-format: YYYY-MM-dd hh:mm:ss
 server:
   port: 0
 

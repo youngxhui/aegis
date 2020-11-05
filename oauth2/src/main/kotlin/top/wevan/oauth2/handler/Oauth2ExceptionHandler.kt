@@ -1,6 +1,6 @@
 package top.wevan.oauth2.handler
 
-import top.wevan.common.CommonResult
+import top.wevan.common.Result
 
 import org.springframework.security.oauth2.common.exceptions.OAuth2Exception
 import org.springframework.web.bind.annotation.ControllerAdvice
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody
 class Oauth2ExceptionHandler {
     @ResponseBody
     @ExceptionHandler(value = [OAuth2Exception::class])
-    fun handleOauth2(e: OAuth2Exception): CommonResult? {
-        return CommonResult.failed(e.message!!)
+    fun handleOauth2(e: OAuth2Exception): Result? {
+        return Result.failed(e.message!!)
     }
 }
