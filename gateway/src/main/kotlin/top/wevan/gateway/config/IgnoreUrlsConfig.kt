@@ -11,6 +11,5 @@ import org.springframework.stereotype.Component
 @Component
 @ConfigurationProperties(prefix = "secure.ignore")
 class IgnoreUrlsConfig {
-    //    var urls: List<String> = listOf("/oauth/auth/**", "/actuator/**")
     lateinit var urls: List<String>
 }

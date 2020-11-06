@@ -38,6 +38,7 @@ class AuthController {
         oauth2TokenDto.refreshToken = oAuth2AccessToken.refreshToken.value
         oauth2TokenDto.expiresIn = oAuth2AccessToken.expiresIn
         oauth2TokenDto.tokenHead = "Bearer "
-        return Result.success(oauth2TokenDto)
+
+        return Result(data = oauth2TokenDto)
     }
 }

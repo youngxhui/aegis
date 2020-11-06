@@ -12,21 +12,22 @@ import javax.annotation.PostConstruct
  * Create by young on 2020/10/28
  * Copyright © 2020 young. All rights reserved.
  */
-//@Service
-//class ResourceServiceImpl {
-//
-//    private lateinit var resourceRolesMap: MutableMap<String, List<String>>
-//
-//    @Autowired
-//    private lateinit var redisTemplate: RedisTemplate<String, Any>
-//
-////    @PostConstruct
-////    fun initData() {
-////        resourceRolesMap = TreeMap()
-////        resourceRolesMap["*"] = listOf("ADMIN")
-////        resourceRolesMap["/api/user/currentUser"] = listOf("ADMIN", "TEST")
-////        redisTemplate.opsForHash<Any, Any>().putAll(RESOURCE_ROLES_MAP, resourceRolesMap)
-////    }
-//
-//
-//}
+@Service
+class ResourceServiceImpl {
+
+    private lateinit var resourceRolesMap: MutableMap<String, List<String>>
+
+    @Autowired
+    private lateinit var redisTemplate: RedisTemplate<String, Any>
+
+    @PostConstruct
+    fun initData() {
+        resourceRolesMap = TreeMap()
+        resourceRolesMap["*"] = listOf("ADMIN")
+        resourceRolesMap["/api/user/currentUser"] = listOf("ADMIN", "TEST")
+        resourceRolesMap["/course/**"] = listOf("ADMIN", "TEST")
+        redisTemplate.opsForHash<Any, Any>().putAll(RESOURCE_ROLES_MAP, resourceRolesMap)
+    }
+
+
+}

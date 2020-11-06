@@ -1,21 +1,21 @@
 
 ### 请求接口
-GET http://localhost:8080/message/hello
+GET http://localhost:8080/course-srv/course/1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJtYWNybyIsInNjb3BlIjpbImFsbCJdLCJpZCI6MSwiZXhwIjoxNjA0MDQ5NjUwLCJhdXRob3JpdGllcyI6WyJBRE1JTiJdLCJqdGkiOiI0MmNkZDZlOS00NTE5LTQ2ODctYjBhNi1kYzc1N2I1YzQ2OWEiLCJjbGllbnRfaWQiOiJjbGllbnQtYXBwIn0.PhxGSua_xqRVXSIDDb59j7v-GWBcaSFTvnlI6wqgqOL8NpWNVlRm7tCjz5Jgqn5GB9ensO57vKaCzP8FrWCCouvps1-Xuo6RK_irddhfjVVqBhDbxEcsLO1VR8AfFQvo4H6zIzZHjfkEuDERmsQlcsPiEP3uRcAMRtoNwXyh4d8
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJ5b3VuZ3hodWkiLCJzY29wZSI6WyJhbGwiXSwiaWQiOjEsImV4cCI6MTYwNDY2ODk3MCwiYXV0aG9yaXRpZXMiOlsiQURNSU4iXSwianRpIjoiOTMwZWVlOGYtNWE0NC00MmI0LTgzMTEtYmQyNGVmNzc0MmNmIiwiY2xpZW50X2lkIjoiY2xpZW50LWFwcCJ9.W6bZ9TjJd01ZCmwfp74st7QV-YyNtJb4HL8OK5o6Q0Ah-_ugZGuPk-QWGcCd06ad-BWveH3c5WBIkqNP1ILZLJg3ocinDo2FZoa9Xa6qxR6lnKBMCRGPTdwQecUmACZ2WIFXroq1BJLB-G7E9oua73UmcgS2y6hQnjZPPxRTYS8
 
 ### 授权
 GET http://localhost:8080/auth/rsa/publicKey
 
-###
 
-POST http://localhost:8080/auth/oauth/token
+### 授权
+POST http://localhost:8024/oauth/token
 Content-Type: application/x-www-form-urlencoded
 
-grant_type=password&client_id=client-app&client_secret=123456&username=macro&password=123456
+grant_type=password&client_id=client-app&client_secret=123456&username=youngxhui@gmail.com&password=123456
 ###
 
 POST http://localhost:8024/oauth/token
 Content-Type: application/x-www-form-urlencoded
 
-grant_type=password&client_id=client-app&client_secret=123456&username=macro&password=123456
+grant_type=password&client_id=client-app&client_secret=123456&username=youngxhui&password=123456

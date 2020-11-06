@@ -21,6 +21,7 @@ import top.wevan.gateway.component.RestAuthenticationEntryPoint
 import top.wevan.gateway.component.RestfulAccessDeniedHandler
 import top.wevan.gateway.constant.AUTHORITY_CLAIM_NAME
 import top.wevan.gateway.constant.AUTHORITY_PREFIX
+import top.wevan.gateway.filter.AuthGlobalFilter
 import top.wevan.gateway.filter.IgnoreUrlsRemoveJwtFilter
 
 
@@ -51,17 +52,14 @@ class ResourceServerConfig {
     @Bean
     fun springSecurityFilterChain(http: ServerHttpSecurity): SecurityWebFilterChain {
 
-        for (url in ignoreUrlsConfig.urls) {
-            logger.info("urls => ${url.toString()}")
-        }
         http.oauth2ResourceServer().jwt()
             .jwtAuthenticationConverter(jwtAuthenticationConverter())
-        //自定义处理JWT请求头过期或签名错误的结果
-        http.oauth2ResourceServer().authenticationEntryPoint(restAuthenticationEntryPoint);
+//        //自定义处理JWT请求头过期或签名错误的结果
+        http.oauth2ResourceServer().authenticationEntryPoint(restAuthenticationEntryPoint)
         //对白名单路径，直接移除JWT请求头
-        http.addFilterBefore(ignoreUrlsRemoveJwtFilter, SecurityWebFiltersOrder.AUTHENTICATION);
+        http.addFilterBefore(ignoreUrlsRemoveJwtFilter, SecurityWebFiltersOrder.AUTHENTICATION)
         http.authorizeExchange()
-            .pathMatchers("/auth/**", "/rsa/publickey", "/actuator/**").permitAll() //白名单配置
+            .pathMatchers(*ArrayUtil.toArray(ignoreUrlsConfig.urls, String::class.java)).permitAll() //白名单配置
             .anyExchange().access(authorizationManager) //鉴权管理器配置
             .and().exceptionHandling()
             .accessDeniedHandler(restfulAccessDeniedHandler) //处理未授权

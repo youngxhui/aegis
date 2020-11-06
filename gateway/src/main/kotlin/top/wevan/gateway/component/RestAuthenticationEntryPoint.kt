@@ -9,7 +9,7 @@ import org.springframework.security.web.server.ServerAuthenticationEntryPoint
 import org.springframework.stereotype.Component
 import org.springframework.web.server.ServerWebExchange
 import reactor.core.publisher.Mono
-import top.wevan.gateway.api.CommonResult
+import top.wevan.common.Result
 import java.nio.charset.Charset
 
 
@@ -23,7 +23,7 @@ class RestAuthenticationEntryPoint : ServerAuthenticationEntryPoint {
         val response = exchange.response
         response.statusCode = HttpStatus.OK
         response.headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-        val body = JSONUtil.toJsonStr(CommonResult.unauthorized(e.message!!))
+        val body = JSONUtil.toJsonStr(Result(data = e.message))
         val buffer = response.bufferFactory().wrap(body.toByteArray(Charset.forName("UTF-8")))
         return response.writeWith(Mono.just(buffer))
     }

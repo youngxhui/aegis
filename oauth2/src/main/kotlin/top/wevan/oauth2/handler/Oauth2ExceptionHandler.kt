@@ -18,6 +18,6 @@ class Oauth2ExceptionHandler {
     @ResponseBody
     @ExceptionHandler(value = [OAuth2Exception::class])
     fun handleOauth2(e: OAuth2Exception): Result? {
-        return Result.failed(e.message!!)
+        return Result(data = e.message)
     }
 }

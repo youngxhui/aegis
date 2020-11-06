@@ -28,19 +28,19 @@ interface CourseService {
 
     /**
      * 保存课程
-     * @param courseParam 课程
+     * @param courseDto 课程
      */
-//    fun saveCourse(courseParam: CourseParam)
+    fun saveCourse(courseDto: CourseDto)
 
     /**
      * 根据tipId获取课程列表
      */
-    fun findAllByTipId(tipId: Long, page: Int, size: Int): List<CourseDto>
+    fun findAllByTipId(tipId: Long, enable: Boolean, page: Int, size: Int): PageDto<CourseDto>
 
     /**
      * 根据subTipId和tipId获取课程列表
      */
-    fun findAllBySubTip(subTipId: Long, page: Int, size: Int): List<CourseDto>
+    fun findAllBySubTip(subTipId: Long, page: Int, size: Int): PageDto<CourseDto>
 
 
     /**

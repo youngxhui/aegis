@@ -3,6 +3,7 @@ package top.wevan.coursesrv.controller
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import top.wevan.common.Result
 import top.wevan.common.service.CourseService
@@ -13,6 +14,7 @@ import top.wevan.common.service.CourseService
  * Copyright © 2020 young. All rights reserved.
  */
 @RestController
+@RequestMapping("course")
 class CourseController {
 
     @Autowired

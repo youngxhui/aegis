@@ -63,29 +63,47 @@ class CourseServiceImpl : CourseService {
     /**
      * 根据tipId获取课程列表
      */
-    override fun findAllByTipId(tipId: Long, page: Int, size: Int): List<CourseDto> {
-        TODO("Not yet implemented")
+    override fun findAllByTipId(tipId: Long, enable: Boolean, page: Int, size: Int): PageDto<CourseDto> {
+        val page = PageRequest.of(page, size)
+        val courseOfPage = courseRepository.findAllByTipIdAndEnable(tipId, true, page)
+        return page2PageDto(courseOfPage)
     }
 
     /**
      * 根据subTipId和tipId获取课程列表
      */
-    override fun findAllBySubTip(subTipId: Long, page: Int, size: Int): List<CourseDto> {
-        TODO("Not yet implemented")
+    override fun findAllBySubTip(subTipId: Long, page: Int, size: Int): PageDto<CourseDto> {
+        val pageable = PageRequest.of(page, size)
+        val coursePage = courseRepository.findAllBySubTipIdAndEnable(subTipId, true, pageable)
+        return page2PageDto(coursePage)
     }
 
     /**
      * 更新是否可用的状态
      */
     override fun updateEnableState(courseId: Long): Boolean {
-        TODO("Not yet implemented")
+        val course =
+            courseRepository.findById(courseId)
+                .orElseThrow { throw ResultException("没有该课程", ResultCode.NotResource.code) }
+        course.enable = !course.enable
+        val courseUpdate = courseRepository.save(course)
+        return courseUpdate.enable
     }
 
     /**
      * 统计所有的课程数量
      */
     override fun countCourse(): Long {
-        TODO("Not yet implemented")
+        return courseRepository.count()
+    }
+
+    override fun saveCourse(courseDto: CourseDto) {
+
+        val course = CoursePo()
+
+        BeanUtils.copyProperties(courseDto, course)
+
+        courseRepository.save(course)
     }
 
 
