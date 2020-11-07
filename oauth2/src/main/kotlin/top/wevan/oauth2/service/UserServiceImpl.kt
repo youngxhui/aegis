@@ -69,17 +69,13 @@ class UserServiceImpl : UserDetailsService {
     override fun loadUserByUsername(email: String): UserDetails {
         logger.info("login email => $email")
         val userPO = userRepository.findUserPOByEmail(email) ?: throw UsernameNotFoundException(USERNAME_PASSWORD_ERROR)
-        logger.info("userPo ${userPO.toString()}")
         val rolePOs = roleRepository.queryRolePOByUserId(userPO.id)
         val userDTO = UserDTO()
         BeanUtils.copyProperties(userPO, userDTO)
-        logger.info("userDto ${userDTO.toString()}")
         rolePOs.forEach {
             userDTO.roles.add(it.name)
         }
-
         val securityUser = SecurityUser(userDTO)
-        logger.info("securityUser $securityUser")
         if (!securityUser.isEnabled) {
             throw DisabledException(ACCOUNT_DISABLED)
         } else if (!securityUser.isAccountNonLocked) {

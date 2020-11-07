@@ -24,6 +24,9 @@ import reactor.core.publisher.Mono
 @Component
 class AuthGlobalFilter : GlobalFilter, Ordered {
 
+
+    private val logger: Logger = LoggerFactory.getLogger(this::class.java)
+
     override fun filter(exchange: ServerWebExchange, chain: GatewayFilterChain): Mono<Void> {
         var ex = exchange
         val token = ex.request.headers.getFirst("Authorization")
@@ -47,7 +50,5 @@ class AuthGlobalFilter : GlobalFilter, Ordered {
 
     override fun getOrder() = 0
 
-
-    private val logger: Logger = LoggerFactory.getLogger(this::class.java)
 
 }

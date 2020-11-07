@@ -2,7 +2,7 @@ package top.wevan.comment.repository
 
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
-import org.springframework.data.mongodb.repository.MongoRepository
+import org.springframework.data.elasticsearch.repository.ElasticsearchRepository
 import org.springframework.stereotype.Repository
 import top.wevan.comment.po.CommentPo
 
@@ -12,7 +12,7 @@ import top.wevan.comment.po.CommentPo
  * Copyright © 2020 young. All rights reserved.
  */
 @Repository
-interface CommentRepository : MongoRepository<CommentPo, Long> {
+interface CommentRepository : ElasticsearchRepository<CommentPo, Long> {
 
     /**
      * 通过课程id查找评论

@@ -1,6 +1,7 @@
 package top.wevan.coursesrv.service.impl
 
 import org.apache.dubbo.config.annotation.DubboService
+import org.slf4j.LoggerFactory
 import org.springframework.beans.BeanUtils
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Page
@@ -13,6 +14,9 @@ import top.wevan.common.exception.ResultException
 import top.wevan.common.service.CourseService
 import top.wevan.coursesrv.po.CoursePo
 import top.wevan.coursesrv.repository.CourseRepository
+import org.springframework.web.context.request.RequestContextHolder
+
+import org.springframework.web.context.request.ServletRequestAttributes
 
 
 /**
@@ -23,6 +27,8 @@ import top.wevan.coursesrv.repository.CourseRepository
 @Service
 class CourseServiceImpl : CourseService {
 
+    private var logger = LoggerFactory.getLogger(this::class.java)
+
     @Autowired
     private lateinit var courseRepository: CourseRepository
 
@@ -30,6 +36,10 @@ class CourseServiceImpl : CourseService {
      * 获取所有的课程
      */
     override fun allCourses(page: Int, size: Int): PageDto<CourseDto> {
+
+        val request = (RequestContextHolder.getRequestAttributes() as ServletRequestAttributes).request
+        val header = request.getHeader("user")
+        logger.info(header)
         val pageable = PageRequest.of(page, size)
 
         val all: Page<CoursePo> = courseRepository.findAll(pageable)
@@ -71,15 +81,19 @@ class CourseServiceImpl : CourseService {
 
     /**
      * 根据subTipId和tipId获取课程列表
+     * @param subTipId 子分类id
+     * @param page 页数
+     * @param size 数量
      */
-    override fun findAllBySubTip(subTipId: Long, page: Int, size: Int): PageDto<CourseDto> {
+    override fun findAllBySubTip(subTipId: Long, enable: Boolean, page: Int, size: Int): PageDto<CourseDto> {
         val pageable = PageRequest.of(page, size)
-        val coursePage = courseRepository.findAllBySubTipIdAndEnable(subTipId, true, pageable)
+        val coursePage = courseRepository.findAllBySubTipIdAndEnable(subTipId, enable, pageable)
         return page2PageDto(coursePage)
     }
 
     /**
      * 更新是否可用的状态
+     * @param courseId 课程id
      */
     override fun updateEnableState(courseId: Long): Boolean {
         val course =
@@ -97,6 +111,10 @@ class CourseServiceImpl : CourseService {
         return courseRepository.count()
     }
 
+    /**
+     * 保存课程信息
+     * @param courseDto CourseDto
+     */
     override fun saveCourse(courseDto: CourseDto) {
 
         val course = CoursePo()

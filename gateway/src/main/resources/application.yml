@@ -15,6 +15,12 @@ spring:
             - Path=/auth/**
           filters:
             - StripPrefix=1
+        - id: course-srv
+          uri: lb://course
+          predicates:
+            - Path=/course/**
+          filters:
+            - StripPrefix=1
       discovery:
         locator:
           enabled: true

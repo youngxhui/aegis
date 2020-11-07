@@ -1,15 +1,20 @@
 package top.wevan.comment.service
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import org.apache.dubbo.config.annotation.DubboReference
 import org.apache.dubbo.config.annotation.DubboService
 import org.slf4j.LoggerFactory
 import org.springframework.beans.BeanUtils
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Service
+import org.springframework.web.context.request.RequestContextHolder
+import org.springframework.web.context.request.ServletRequestAttributes
 import top.wevan.comment.po.CommentPo
 import top.wevan.comment.repository.CommentRepository
 import top.wevan.common.dto.CommentDto
+import top.wevan.common.dto.HeaderDto
 import top.wevan.common.dto.PageDto
 import top.wevan.common.service.CommentService
 import top.wevan.common.service.UserService
@@ -27,9 +32,6 @@ class CommentServiceImpl : CommentService {
 
     @Autowired
     private lateinit var commentRepository: CommentRepository
-
-    @DubboReference
-    private lateinit var userService: UserService
 
     /**
      * 保存的 comment
@@ -52,10 +54,11 @@ class CommentServiceImpl : CommentService {
     override fun findCommentByCourseId(courseId: Long, enable: Boolean, page: Int, size: Int): PageDto<CommentDto> {
         val pageable = PageRequest.of(page, size)
         val commentPage = commentRepository.findByCourseIdAndEnable(courseId, true, pageable)
-        commentPage.map {
-            commentToResponse(comment = it)
+        val commentDtoPage = commentPage.map {
+            val pageDto = commentToResponse(comment = it)
+            return@map pageDto
         }
-        return PageDto()
+        return commentDtoPage
     }
 
     /**
@@ -80,22 +83,18 @@ class CommentServiceImpl : CommentService {
      * 获取评论数量
      */
     override fun countComment(): Long {
-        TODO("Not yet implemented")
+        return commentRepository.count()
     }
 
-    private fun commentToResponse(comment: CommentPo): CommentDto {
-
-//        val user = userRepository.findNameAndAvatarAndAccountById(comment.userId)
-//        val loginUserId = (SecurityContextHolder.getContext().authentication.principal as User).id
-//        val liked = likedManager.getUserAndCommentLike(userId = loginUserId, commentId = comment.id)
+    private fun commentToResponse(comment: Page<CommentPo>): PageDto<CommentDto> {
+        val request = (RequestContextHolder.getRequestAttributes() as ServletRequestAttributes).request
+        val header = request.getHeader("user")
+        val mapper = ObjectMapper()
+        val headerDto = mapper.readValue(header, HeaderDto::class.java)
+//       val liked = likedManager.getUserAndCommentLike(userId = loginUserId, commentId = comment.id)
 
         val commentDto = CommentDto()
-//        BeanUtils.copyProperties(comment, commentDto)
-//        commentDto.like = liked.type
-////        commentDto.account = user.account
-////        commentDto.userAvatar = user.avatar
-////        commentDto.username = user.name
-//        println("comment = [${commentDto}]")
+        BeanUtils.copyProperties(comment, commentDto)
         return commentDto
     }
 }

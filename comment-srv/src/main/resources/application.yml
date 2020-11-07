@@ -21,9 +21,10 @@ spring:
       probability: 1.0
     redis:
       enabled: false
-  data:
-    mongodb:
-      database: aegis
+
+  elasticsearch:
+    rest:
+      uris: http://localhost:9200
 
 dubbo:
   protocol:

@@ -40,7 +40,7 @@ interface CourseService {
     /**
      * 根据subTipId和tipId获取课程列表
      */
-    fun findAllBySubTip(subTipId: Long, page: Int, size: Int): PageDto<CourseDto>
+    fun findAllBySubTip(subTipId: Long, enable: Boolean, page: Int, size: Int): PageDto<CourseDto>
 
 
     /**

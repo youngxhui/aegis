@@ -1,7 +1,7 @@
 package top.wevan.comment.po
 
 import org.springframework.data.annotation.Id
-import org.springframework.data.mongodb.core.mapping.Document
+import org.springframework.data.elasticsearch.annotations.Document
 import java.sql.Timestamp
 import java.util.*
 
@@ -10,7 +10,7 @@ import java.util.*
  * Create by young on 2020/11/5
  * Copyright © 2020 young. All rights reserved.
  */
-@Document(value = "comments")
+@Document(indexName = "comments")
 class CommentPo {
     @Id
     var id: String = UUID.randomUUID().toString()
